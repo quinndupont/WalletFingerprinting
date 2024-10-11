@@ -5,11 +5,11 @@ From "New Online Communities: Graph Deep Learning on Anonymous Voting Networks t
 
 We can use historical wallet balances to "fingerprint" voters. Using the `snapshot.org` API, we constructed a graph of voters for seven DAOs of varying sizes and augmented each voter with unique wallet token balances at the time of the vote. We used the Covalent Unified API to collect token tickers and their associated historical balances and attached these `coins' to each voter. From Figures **1** and **2**, we see many unique tokens in voter wallets and observe that voters share wallet token sets, with a long tail of shared, distinct voter sets. If we then dot plot the token sets and colormap their normalized values, we see clear evidence of extractable information for each wallet defined by the uniqueness of wallet token sets (Figure **3**).
 
-**[Placeholder for Figure 1: Histogram of Unique Wallet Tokens]**
+![Histogram of Unique Wallet Tokens](uniquetokens.png "Histogram of Unique Wallet Tokens")
 
-**[Placeholder for Figure 2: Histogram of Unique Wallet Token Sets]**
+![Histogram of Unique Wallet Token Sets](wallettokensets.png "Histogram of Unique Wallet Token Sets")
 
-**[Placeholder for Figure 3: Dot Plot of Voter Wallet Token Sets with Colormapped Values]**
+![Dot Plot of Voter Wallet Token Sets with Colormapped Values](dotplot.png "Dot Plot of Voter Wallet Token Sets with Colormapped Values")
 
 Indeed, some token sets are highly individual, like the `anonymous' voter who owns a set of [REALTOKENS](https://realt.co/) (a form of tokenized, fractional property ownership) with specific addresses in Detroit, Michigan (see Figure **4**):
 
@@ -20,19 +20,19 @@ Indeed, some token sets are highly individual, like the `anonymous' voter who ow
 5. 15095 HARTWELL ST DETROIT MI
 6. ...
 
-**[Placeholder for Figure 4: Map of REALTOKENS in Wallet of Anonymous Voter]**
+![Map of REALTOKENS in Wallet of Anonymous Voter](realtokensmap.png "Map of REALTOKENS in Wallet of Anonymous Voter")
 
 More practically, we also analyze the wallet fingerprints using Uniform Manifold Approximation and Projection (UMAP), a manifold learning technique for dimensionality reduction. UMAP seeks to reduce \( D \) to a lower dimension \( d \), resulting in \( \mathbf{E}_{\text{reduced}} \in \mathbb{R}^{N \times d} \), while preserving the local and global structure of the data. While the UMAP algorithm is quite simple (it calculates nearest-neighbours to produce sets of weighted graphs, calculates probabilities for edges on a unified graph, and then uses a force algorithm to lay the graph out), the mathematical underpinnings are fascinating and much more complex [McInnes et al. (2020)](https://arxiv.org/abs/1802.03426). In a sentence, UMAP finds fuzzy simplicial sets (mathematical abstractions from category theory that involve objects and mappings), which define the metric between nodes (viz. Riemannian in that space is made of individually defined metrics, unlike Euclidean space); to display a high dimensional representation in low (2 or 3) dimensions, UMAP minimizes the cross-entropy between the high-dimensional fuzzy simplicial set and the _a priori_ low dimensional manifold.
 
 To prepare our fingerprint dataset, we encode each voter's unique ticker set as a sparse matrix. We then fit the wallet's vector embeddings using a Jaccard metric with UMAP and construct an interactive 2D or 3D plot, which reveals features of the voter fingerprints (the interactive plot is too large to host on Github). Through experimentation we found that the Jaccard, cosine, and Manhattan metrics all work reasonably well with a default 15 neighbours, but Jaccard offered the best balance of local and global topology (see Figures **5** and **6**).
 
-**[Placeholder for Figure 5: UMAP Projection of Wallet Token Fingerprints]**
+![UMAP Projection of Wallet Token Fingerprints](2dembeddings.png "UMAP Projection of Wallet Token Fingerprints")
 
-**[Placeholder for Figure 6: UMAP Projection of HDBSCAN Clustered Wallet Token Fingerprints]**
+![UMAP Projection of HDBSCAN Clustered Wallet Token Fingerprints](2dclusteredHDBSCAN.png "UMAP Projection of HDBSCAN Clustered Wallet Token Fingerprints")
 
 We then cluster the embeddings using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) and refit the embeddings with UMAP to visualize the results (see Figure **6**). Inspecting the plot is revealing; for instance, when tight, uniform clusters are far from others, we suspect the presence of Sybils (clusters reveal sets of users with a highly unique wallet fingerprint; see Figure **7**).
 
-**[Placeholder for Figure 7: Suspected Sybils Determined by Wallet Fingerprints (nodes share a highly distinct fingerprint)]**
+![Suspected Sybils Determined by Wallet Fingerprints](Sybilfingerprints.png "Suspected Sybils Determined by Wallet Fingerprints")
 
 Finally, we train a simple deep neural network to learn each voter's wallet token fingerprint and predict the associated DAO. This shows that wallet sets contain important topological information. Indeed, our clustering results have an accuracy of 0.6, which is significantly better than random guessing (0.14) for seven classes, by 45.7%.
 
@@ -67,13 +67,13 @@ Optimization is performed using the Adam optimizer with a learning rate of \( 0.
 
 After training, the dimensionality of embeddings is once again reduced using UMAP for inspection. We see structure, but the results are of limited value (see Figure **8**). Instead, we cluster these high dimensional embeddings using a Random Forest classifier (see Figure **9**).
 
-**[Placeholder for Figure 8: UMAP Projection of Deep Feedforward Neural Network Embeddings of Wallet Token Fingerprints]**
+![UMAP Projection of Deep Feedforward Neural Network Embeddings of Wallet Token Fingerprints](nn_embeddings_UMAP.png "UMAP Projection of Deep Feedforward Neural Network Embeddings of Wallet Token Fingerprints")
 
-**[Placeholder for Figure 9: UMAP Projection of Random Forest Clustering of Wallet Token Fingerprints (Colored by Prediction Accuracy)]**
+![UMAP Projection of Random Forest Clustering of Wallet Token Fingerprints](rf_cluster_UMAP.png "UMAP Projection of Random Forest Clustering of Wallet Token Fingerprints")
 
 The resulting clusters can be evaluated against the true labels with a confusion matrix (Figure **10**). Additionally, we computed cluster evaluation metrics (see Table **1**).
 
-**[Placeholder for Figure 10: Confusion Matrix of Clustering of Wallet Token Fingerprints]**
+![Confusion Matrix of Clustering of Wallet Token Fingerprints](confusionmatrix.png "Confusion Matrix of Clustering of Wallet Token Fingerprints")
 
 | Class | Precision | Recall | F1-Score | Support |
 |-------|-----------|--------|----------|---------|
