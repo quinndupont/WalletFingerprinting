@@ -32,7 +32,7 @@ To prepare our fingerprint dataset, we encode each voter's unique ticker set as 
 
 We then cluster the embeddings using Hierarchical Density-Based Spatial Clustering of Applications with Noise (HDBSCAN) and refit the embeddings with UMAP to visualize the results (see Figure **6**). Inspecting the plot is revealing; for instance, when tight, uniform clusters are far from others, we suspect the presence of Sybils (clusters reveal sets of users with a highly unique wallet fingerprint; see Figure **7**).
 
-![Suspected Sybils Determined by Wallet Fingerprints](Sybilfingerprints.png "Suspected Sybils Determined by Wallet Fingerprints")
+![Suspected Sybils Determined by Wallet Fingerprints](sybilfingerprints.png "Suspected Sybils Determined by Wallet Fingerprints")
 
 Finally, we train a simple deep neural network to learn each voter's wallet token fingerprint and predict the associated DAO. This shows that wallet sets contain important topological information. Indeed, our clustering results have an accuracy of 0.6, which is significantly better than random guessing (0.14) for seven classes, by 45.7%.
 
