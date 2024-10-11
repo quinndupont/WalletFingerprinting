@@ -1,4 +1,4 @@
-# WalletFingerprinting
+# Wallet Fingerprinting
 A novel method to cluster unknown cryptocurrency addresses. 
 
 From "New Online Communities: Graph Deep Learning on Anonymous Voting Networks to Identify Sybils in Polycentric Governance" [https://arxiv.org/abs/2311.17929](https://arxiv.org/abs/2311.17929)
