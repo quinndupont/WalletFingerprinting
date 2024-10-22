@@ -3,6 +3,10 @@ A novel method to cluster unknown cryptocurrency addresses.
 
 From "New Online Communities: Graph Deep Learning on Anonymous Voting Networks to Identify Sybils in Polycentric Governance" [https://arxiv.org/abs/2311.17929](https://arxiv.org/abs/2311.17929)
 
+Thank you to Covalent for sponsoring this research
+
+![Research sponsored by Covalent](covalent.png "Research sponsored by Covalent")
+
 We can use historical wallet balances to "fingerprint" voters. Using the `snapshot.org` API, we constructed a graph of voters for seven DAOs of varying sizes and augmented each voter with unique wallet token balances at the time of the vote. We used the Covalent Unified API to collect token tickers and their associated historical balances and attached these `coins' to each voter. From Figures **1** and **2**, we see many unique tokens in voter wallets and observe that voters share wallet token sets, with a long tail of shared, distinct voter sets. If we then dot plot the token sets and colormap their normalized values, we see clear evidence of extractable information for each wallet defined by the uniqueness of wallet token sets (Figure **3**).
 
 ![Histogram of Unique Wallet Tokens](uniquetokens.png "Histogram of Unique Wallet Tokens")
